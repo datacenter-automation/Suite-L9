@@ -8,6 +8,7 @@
         "php": "^8.0.2",
         "guzzlehttp/guzzle": "^7.2",
         "http-interop/http-factory-guzzle": "^1.2",
+        "laravel/cashier": "^14.0",
         "laravel/framework": "^9.19",
         "laravel/horizon": "^5.10",
         "laravel/sanctum": "^2.14.1",
