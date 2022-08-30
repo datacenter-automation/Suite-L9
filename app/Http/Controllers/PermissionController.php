@@ -18,7 +18,7 @@ class PermissionController extends Controller
     {
         $permissions = Permission::all();
 
-        return view('permissions.index', [
+        return view('dashboard.general.permission.index', [
             'permissions' => $permissions
         ]);
     }
@@ -30,7 +30,7 @@ class PermissionController extends Controller
      */
     public function create()
     {
-        return view('permissions.create');
+        return view('dashboard.general.permission.create');
     }
 
     /**
@@ -47,7 +47,7 @@ class PermissionController extends Controller
 
         Permission::create($request->only('name'));
 
-        return redirect()->route('permissions.index')
+        return redirect()->route('permission.index')
             ->with('success', __('Permission created successfully.'));
     }
 
@@ -59,7 +59,7 @@ class PermissionController extends Controller
      */
     public function edit(Permission $permission)
     {
-        return view('permissions.edit', [
+        return view('dashboard.general.permission.edit', [
             'permission' => $permission
         ]);
     }
@@ -79,7 +79,7 @@ class PermissionController extends Controller
 
         $permission->update($request->only('name'));
 
-        return redirect()->route('permissions.index')
+        return redirect()->route('permission.index')
             ->with('success', __('Permission updated successfully.'));
     }
 
@@ -92,7 +92,7 @@ class PermissionController extends Controller
     {
         $permission->delete();
 
-        return redirect()->route('permissions.index')
+        return redirect()->route('permission.index')
             ->with('success', __('Permission deleted successfully.'));
     }
 }

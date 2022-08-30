@@ -26,11 +26,11 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
      */
     Route::get('/', 'HomeController@index')->name('home.index');
 
-    Route::group(['middleware' => ['auth', 'permission']], function() {
+    Route::group(['prefix' => '/dashboard' ,'middleware' => ['auth', 'permission']], function() {
         /**
          * User Routes
          */
-        Route::group(['prefix' => 'users'], function() {
+        Route::group(['prefix' => 'user'], function() {
             Route::get('/', 'UserController@index')->name('users.index');
             Route::get('/create', 'UserController@create')->name('users.create');
             Route::post('/create', 'UserController@store')->name('users.store');
@@ -40,8 +40,8 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
             Route::delete('/{user}/delete', 'UserController@destroy')->name('users.destroy');
         });
 
-        Route::resource('roles', RoleController::class);
-        Route::resource('permissions', PermissionController::class);
+        Route::resource('role', RoleController::class);
+        Route::resource('permission', PermissionController::class);
     });
 });
 

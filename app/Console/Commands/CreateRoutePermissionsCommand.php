@@ -32,6 +32,8 @@ class CreateRoutePermissionsCommand extends Command
         $routes = Route::getRoutes()->getRoutes();
 
         foreach ($routes as $route) {
+            if (! array_key_exists('middleware', $route->getAction())) { continue; }
+
             if ($route->getName() != '' && $route->getAction()['middleware']['0'] == 'web') {
                 $permission = Permission::where('name', $route->getName())->first();
 
