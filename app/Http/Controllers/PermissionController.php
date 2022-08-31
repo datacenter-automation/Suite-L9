@@ -16,10 +16,8 @@ class PermissionController extends Controller
      */
     public function index()
     {
-        $permissions = Permission::all();
-
         return view('dashboard.general.permission.index', [
-            'permissions' => $permissions
+            'permissions' => Permission::all(),
         ]);
     }
 
@@ -59,9 +57,7 @@ class PermissionController extends Controller
      */
     public function edit(Permission $permission)
     {
-        return view('dashboard.general.permission.edit', [
-            'permission' => $permission
-        ]);
+        return view('dashboard.general.permission.edit', compact('permission'));
     }
 
     /**
