@@ -28,7 +28,7 @@
 
     </div>
     <div class="mt-4">
-        <a href="{{ route('roles.edit', $role->id) }}" class="btn btn-info">Edit</a>
-        <a href="{{ route('roles.index') }}" class="btn btn-default">Back</a>
+        <a href="{{ route('role.edit', $role->id) }}" class="btn btn-info">Edit</a>
+        <a href="{{ route('role.index') }}" class="btn btn-default">Back</a>
     </div>
 @endsection
