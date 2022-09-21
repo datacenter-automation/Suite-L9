@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\IncomingMail;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Route;
@@ -19,18 +20,17 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-Route::group(['namespace' => 'App\Http\Controllers'], function()
-{
+Route::group(['namespace' => 'App\Http\Controllers'], function () {
     /**
      * Home Routes
      */
     Route::get('/', 'HomeController@index')->name('home.index');
 
-    Route::group(['prefix' => '/dashboard' ,'middleware' => ['auth', 'permission']], function() {
+    Route::group(['prefix' => '/dashboard', 'middleware' => ['auth', 'permission']], function () {
         /**
          * User Routes
          */
-        Route::group(['prefix' => 'user'], function() {
+        Route::group(['prefix' => 'user'], function () {
             Route::get('/', 'UserController@index')->name('users.index');
             Route::get('/create', 'UserController@create')->name('users.create');
             Route::post('/create', 'UserController@store')->name('users.store');
@@ -45,5 +45,6 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
     });
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
+Route::post('/mail/incoming', IncomingMail::class);

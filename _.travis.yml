@@ -1,0 +1,61 @@
+language: php
+
+matrix:
+  fast_finish: true
+  include:
+    - php:
+        - 8.0
+
+addons:
+  hosts:
+    - suite-l8.local
+
+branches:
+  only:
+    - main
+    - /^deploy-.*$/
+    - initial
+
+cache:
+  directories:
+    - $HOME/.composer/cache
+    - node_modules
+    - vendor
+    - vendor_internal
+
+env:
+  global:
+    - setup=stable
+
+before_install:
+  - sudo apt-get -qq update
+  - mysql -e 'CREATE DATABASE dcas_l9;'
+  - phpenv config-rm xdebug.ini || true
+  - printf "\n" | pecl install -f redis
+
+before_script:
+  - cp .env.travis .env
+  - travis_retry composer self-update
+  - travis_retry composer install --dev --prefer-source --no-interaction
+  - npm install
+  - php artisan migrate
+
+script:
+  - vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
+
+after_script:
+  - wget https://scrutinizer-ci.com/ocular.phar
+  - if [[ $COMPOSER_FLAGS == '' ]]; then php ocular.phar code-coverage:upload --format=php-clover coverage.clover; fi
+
+notifications:
+  email:
+    recipients:
+      - alex@elementalfusion.online
+    on_success: change
+    on_failure: always
+
+services:
+  - mysql
+  - redis-server
+
+sudo: false
